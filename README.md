@@ -17,3 +17,4 @@ After running the script you need to add the following to the hosts file of the 
 ```
 <k3shostmachineip> acceptpython.test
 ```
+replace the k3s hostmachine ip with relevant address.
