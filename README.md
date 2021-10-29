@@ -13,3 +13,7 @@ To deploy the application run
 ```
 sh deploy.sh
 ```
+After running the script you need to add the following to the hosts file of the machine you are accessing the running app from:
+```
+<k3shostmachineip> acceptpython.test
+```
