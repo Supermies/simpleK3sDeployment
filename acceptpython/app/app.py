@@ -4,6 +4,11 @@ import logging
 # Initialize the Flask app
 app = Flask(__name__)
 
+# moderation function 
+def moderation(request):
+    if type(request.form['forumtext']) == str:
+        logging.warning(f"ACCEPTED forum post: {request.form['forumtext']}")
+
 # Define root page
 @app.route('/')
 def forumpost():
@@ -13,8 +18,7 @@ def forumpost():
 @app.route('/forumpost', methods=['GET', 'POST'])
 def postcheck():
     if request.method == 'POST':
-        if type(request.form['forumtext']) == str:
-            logging.warning(f"ACCEPTED forum post: {request.form['forumtext']}")
+            moderation(request)
             return render_template('accepted.html', response=request.form['forumtext'])
     elif request.method == 'GET':
         return 'cannot handle GET request'
