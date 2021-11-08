@@ -19,11 +19,11 @@ After running the script you need to add the following to the hosts file of the 
 ```
 replace the k3s hostmachine ip with relevant address.
 
-You can test the application by going to http://acceptpython.test and posting on the form field
+You can test the application by going to http://acceptpython.test and posting on the form field that appears on browser
 
 You should get page with ACCEPTED and your post repeated
 
-you can see the pod logging the accepted message by running:
+you can see the pod logging the accepted message by running following on the host machine:
 
 ```
 kubectl logs $(kubectl get pods | grep acceptpython | awk {'print $1'})
