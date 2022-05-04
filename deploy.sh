@@ -12,8 +12,13 @@ fi
 # install nginx ingress controller for k3s
 if ! kubectl get deployments -n ingress-nginx | grep nginx
 then
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
 fi
+
+##	# Add CA root to validationwebhookconfigurations for nginx-ingress-controller
+#	CA=$(kubectl -n ingress-nginx get secret ingress-nginx-admission -ojsonpath='{.data.ca}')
+#	kubectl patch validatingwebhookconfigurations ingress-nginx-admission --type='json' -p='[{"op": "add", "path": "/webhooks/0/clientConfig/caBundle", "value":"'$CA'"}]'
+#	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
 
 # build locally the application image. Could add versioning
 if ! docker images | grep acceptpython
@@ -22,6 +27,8 @@ then
     docker build . -t acceptpython:1.0 
     cd ../
 fi 
+
+chars="/-\|"
 
 # deploy the built application to local k3s server
 if ! kubectl get deployments | grep acceptpython 
